@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Header from "./Header";
+import MainContent from "./MainContent";
+import Footer from "./Footer";
+import Greetings from "./Greetings";
 
-function App() {
+export default function App() {
+  const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleAddToCart = () => {
+    setCartCount(cartCount + 1);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header cartCount={cartCount} onSearch={handleSearch} />
+      <Greetings user="Kent" />
+      <MainContent onAddToCart={handleAddToCart} searchQuery={searchQuery} />
+      <Footer />
     </div>
   );
 }
-
-export default App;
