@@ -96,9 +96,13 @@ body {
 
 .category-header {
   display: flex;
-  justify-content: space-between; /* Distribute space between items */
-  align-items: center; /* Center items vertically */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
   margin-bottom: 20px; /* Space between header and products */
+}
+
+.count-container {
+  text-align: center; /* Center the button text */
 }
 
 .category-header h2 {

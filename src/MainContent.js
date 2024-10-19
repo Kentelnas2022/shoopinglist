@@ -30,7 +30,7 @@ export default function MainContent({ searchQuery }) {
   const [products, setProducts] = useState(initialProducts);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [checkedProducts, setCheckedProducts] = useState(new Set()); // Set to manage checked products
+  const [checkedProducts, setCheckedProducts] = useState(new Set());
 
   // Open modal for editing
   const handleEdit = (product) => {
@@ -43,14 +43,14 @@ export default function MainContent({ searchQuery }) {
     setProducts(products.filter(product => product.id !== id));
     setCheckedProducts(prev => {
       const updated = new Set(prev);
-      updated.delete(id); // Remove product from checked state if deleted
+      updated.delete(id);
       return updated;
     });
   };
 
   // Add new product modal
   const handleAddNewProduct = () => {
-    setSelectedProduct(null); // Reset the selected product for adding a new one
+    setSelectedProduct(null);
     setModalOpen(true);
   };
 
@@ -103,14 +103,25 @@ export default function MainContent({ searchQuery }) {
     alert(`Proceeding to checkout for all products in ${category}`);
   };
 
+  // Get checked and remaining count for each category
+  const getCheckedCount = (category) => {
+    return products.filter(product => product.category === category && checkedProducts.has(product.id)).length;
+  };
+
+  const getRemainingCount = (category) => {
+    return products.filter(product => product.category === category && !checkedProducts.has(product.id)).length;
+  };
+
   return (
     <main className="main-content">
       {categories.map(category => (
         <div key={category} className="category-container">
           <div className="category-header">
             <h2>{category}</h2>
-            <div className="checkout-container" onClick={() => checkoutAll(category)}>
-              <input type="checkbox" className="checkout-checkbox" />
+            <div className="count-container">
+              <button className="count-button">
+                {`Checked: ${getCheckedCount(category)} | Remaining: ${getRemainingCount(category)}`}
+              </button>
             </div>
           </div>
           <div className="category-content">
