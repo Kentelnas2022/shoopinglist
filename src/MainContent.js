@@ -1,44 +1,42 @@
 import React, { useState } from "react";
 import "./App.css";
 import ProductModal from "./ProductModal";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaPlus } from "react-icons/fa";
 
+// Initial list of products with their details
 const initialProducts = [
   { id: 1, name: "Banana", price: "₱30", img: "/img/Banana.jpg", category: "Fruits" },
   { id: 2, name: "Apple", price: "₱40", img: "/img/apple.jpg", category: "Fruits" },
   { id: 3, name: "Watermelon", price: "₱40", img: "/img/watermelon.jpg", category: "Fruits" },
-  { id: 4, name: "Papaya", price: "₱40", img: "/img/papaya.jpg", category: "Fruits" },
-  { id: 5, name: "Grapes", price: "₱40", img: "/img/grapes.jpg", category: "Fruits" },
-  { id: 6, name: "Mango", price: "₱40", img: "/img/mango.jpg", category: "Fruits" },
-  { id: 7, name: "Ampalaya", price: "₱40", img: "/img/ampalaya.jpg", category: "Vegetables" },
-  { id: 8, name: "Broccoli", price: "₱40", img: "/img/broccoli.jpg", category: "Vegetables" },
-  { id: 9, name: "Lettuce", price: "₱40", img: "/img/lettuce.jpg", category: "Vegetables" },
-  { id: 10, name: "Carrot", price: "₱40", img: "/img/carrot.jpg", category: "Vegetables" },
-  { id: 11, name: "Onion", price: "₱40", img: "/img/onion.jpg", category: "Vegetables" },
-  { id: 12, name: "Eggplant", price: "₱40", img: "/img/eggplant.jpg", category: "Vegetables" },
-  { id: 13, name: "Pancit Canton", price: "₱40", img: "/img/canton.jpg", category: "Processed foods" },
-  { id: 14, name: "Century Tuna", price: "₱40", img: "/img/tuna.jpg", category: "Processed foods" },
-  { id: 15, name: "Burger", price: "₱40", img: "/img/burger.jpg", category: "Processed foods" },
-  { id: 16, name: "Coca-cola", price: "₱40", img: "/img/cocacola.jpg", category: "Processed foods" },
-  { id: 17, name: "Hotdog", price: "₱40", img: "/img/hotdog.jpg", category: "Processed foods" },
-  { id: 18, name: "Potatochips", price: "₱40", img: "/img/potatochips.jpg", category: "Processed foods" },
+  { id: 4, name: "Mango", price: "₱40", img: "/img/mango.jpg", category: "Fruits" },
+  { id: 5, name: "Ampalaya", price: "₱40", img: "/img/ampalaya.jpg", category: "Vegetables" },
+  { id: 6, name: "Broccoli", price: "₱40", img: "/img/broccoli.jpg", category: "Vegetables" },
+  { id: 7, name: "Lettuce", price: "₱40", img: "/img/lettuce.jpg", category: "Vegetables" },
+  { id: 8, name: "Eggplant", price: "₱40", img: "/img/eggplant.jpg", category: "Vegetables" },
+  { id: 9, name: "Pancit Canton", price: "₱40", img: "/img/canton.jpg", category: "Processed foods" },
+  { id: 10, name: "Century Tuna", price: "₱40", img: "/img/tuna.jpg", category: "Processed foods" },
+  { id: 11, name: "Burger", price: "₱40", img: "/img/burger.jpg", category: "Processed foods" },
+  { id: 12, name: "Potatochips", price: "₱40", img: "/img/potatochips.jpg", category: "Processed foods" },
 ];
 
+// Get all unique categories from the initial products list
 const categories = [...new Set(initialProducts.map(product => product.category))];
 
 export default function MainContent({ searchQuery }) {
+  // State hooks for managing products, modal, and selections
   const [products, setProducts] = useState(initialProducts);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [checkedProducts, setCheckedProducts] = useState(new Set());
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // Open modal for editing
+  // Opens the edit modal for a selected product
   const handleEdit = (product) => {
     setSelectedProduct(product);
     setModalOpen(true);
   };
 
-  // Delete product
+  // Deletes a product by its id
   const handleDelete = (id) => {
     setProducts(products.filter(product => product.id !== id));
     setCheckedProducts(prev => {
@@ -48,13 +46,14 @@ export default function MainContent({ searchQuery }) {
     });
   };
 
-  // Add new product modal
-  const handleAddNewProduct = () => {
+  // Opens the modal to add a product in a specific category
+  const handleAddProductInCategory = (category) => {
     setSelectedProduct(null);
+    setSelectedCategory(category);
     setModalOpen(true);
   };
 
-  // Add or update product
+  // Adds a new product or updates an existing one
   const handleAddProduct = (newProduct) => {
     const isExistingProduct = products.some((p) => p.id === newProduct.id);
 
@@ -65,52 +64,48 @@ export default function MainContent({ searchQuery }) {
         )
       );
     } else {
-      setProducts([...products, newProduct]);
+      setProducts([...products, { ...newProduct, id: products.length + 1, category: selectedCategory }]);
     }
+    setSelectedCategory(null);
   };
 
-  // Filter products based on search query
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  // Toggle checkbox
+  // Toggles the checked state of a product
   const toggleCheck = (id) => {
     const updatedCheckedProducts = new Set(checkedProducts);
     if (updatedCheckedProducts.has(id)) {
-      updatedCheckedProducts.delete(id); // Uncheck
+      updatedCheckedProducts.delete(id);
     } else {
-      updatedCheckedProducts.add(id); // Check
+      updatedCheckedProducts.add(id);
     }
     setCheckedProducts(updatedCheckedProducts);
   };
 
-  // Close modal
+  // Closes the modal and resets selected states
   const closeModal = () => {
     setModalOpen(false);
     setSelectedProduct(null);
+    setSelectedCategory(null);
   };
 
-  // Handle checkout for all products in a category
-  const checkoutAll = (category) => {
-    const categoryProducts = products.filter(product => product.category === category);
-    const checkedIds = categoryProducts.map(product => product.id);
-    const newCheckedProducts = new Set(checkedProducts);
-    
-    checkedIds.forEach(id => newCheckedProducts.add(id));
-    setCheckedProducts(newCheckedProducts);
-
-    alert(`Proceeding to checkout for all products in ${category}`);
-  };
-
-  // Get checked and remaining count for each category
+  // Gets the count of checked products in a category
   const getCheckedCount = (category) => {
     return products.filter(product => product.category === category && checkedProducts.has(product.id)).length;
   };
 
+  // Gets the count of remaining (unchecked) products in a category
   const getRemainingCount = (category) => {
     return products.filter(product => product.category === category && !checkedProducts.has(product.id)).length;
   };
+
+  // Checks if a category has no products after applying the search filter
+  const isCategoryEmpty = (category) => {
+    return filteredProducts.filter(product => product.category === category).length === 0;
+  };
+
+  // Filters products based on the search query
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <main className="main-content">
@@ -122,12 +117,15 @@ export default function MainContent({ searchQuery }) {
               <button className="count-button">
                 {`Checked: ${getCheckedCount(category)} | Remaining: ${getRemainingCount(category)}`}
               </button>
+              <FaPlus className="add-product-icon" onClick={() => handleAddProductInCategory(category)} />
             </div>
           </div>
           <div className="category-content">
+            {isCategoryEmpty(category) && <p>The product isn't existed</p>}
             <div className="product-grid">
               {filteredProducts
                 .filter(product => product.category === category)
+                .sort((a, b) => (checkedProducts.has(a.id) ? 1 : -1))
                 .map(product => (
                   <div key={product.id} className={`product-box ${checkedProducts.has(product.id) ? 'crossed-out' : ''}`}>
                     <label className="checkbox-container">
