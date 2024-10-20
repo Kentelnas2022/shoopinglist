@@ -12,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #ff4242; /* Match this color in the footer */
+  background-color: #ff4242; 
 }
 
 .header-left,
@@ -80,107 +80,114 @@ body {
 
 /* Main Content Styles */
 .main-content {
-  display: grid; /* Add grid display */
-  grid-template-columns: repeat(3, 1fr); /* Create 3 equal-width columns */
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
   padding: 20px;
-  gap: 20px; /* Space between categories */
+  gap: 20px; 
 }
 
 .category-container {
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #dfcaca;
   border-radius: 8px;
-  background-color: #f9f9f9; /* Light background to differentiate */
+  background-color: #ffffff; 
 }
 
 .category-header {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  margin-bottom: 20px; /* Space between header and products */
+  flex-direction: column; 
+  align-items: center; 
+  margin-bottom: 20px; 
 }
 
 .count-container {
-  text-align: center; /* Center the button text */
+  display: flex;
+  align-items: center;
+}
+
+.count-button {
+  background: linear-gradient(135deg, #ff4242, #f5005a);
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.count-button:hover {
+  background: linear-gradient(135deg, #ff4242, #f5005a);
+}
+
+.add-product-icon {
+  font-size: 24px;
+  margin-left: 10px;
+  color: #f5005a;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.add-product-icon:hover {
+  color: #5b10b2;
 }
 
 .category-header h2 {
-  margin: 0; /* Remove default margin for better alignment */
-  font-size: 24px; /* Adjust font size as needed */
+  margin: 0; 
+  font-size: 24px; 
   color: #333;
-  flex-grow: 1; /* Allow the h2 to take up available space */
-  text-align: center; /* Center text within its own space */
-}
-
-.add-icon {
-  font-size: 1.5rem; /* Size of the plus icon */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  color: #4caf50; /* Color of the plus icon */
-  transition: color 0.3s; /* Transition effect on hover */
-}
-
-.add-icon:hover {
-  color: #388e3c; /* Darker color on hover */
+  flex-grow: 1; 
+  text-align: center; 
 }
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Create 2 equal-width columns for products */
-  gap: 15px; /* Space between product boxes */
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 15px; 
 }
 
 .product-box {
-  position: relative; /* Set position relative to position the checkbox */
+  position: relative; 
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
   background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-  display: flex; /* Use flexbox to align contents */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: space-between; /* Space items evenly */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
 }
 
 .product-image {
   width: 100%;
-  height: 150px; /* Fixed height for all images */
-  object-fit: cover; /* Ensure images cover the area without distortion */
+  height: 150px; 
+  object-fit: cover; 
   border-radius: 8px;
 }
 
 .product-info {
   margin-top: 10px;
-  flex-grow: 1; /* Allow the product info to grow */
+  flex-grow: 1; 
 }
 
 .product-icons {
   display: flex;
-  justify-content: center; /* Center align icons */
-  gap: 10px;
+  justify-content: center;
+  gap: 2px; 
   margin-top: 10px;
 }
 
 .icon {
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
+  color: #888; 
 }
 
-.edit-icon {
-  color: #28a745; /* User-friendly green color */
-}
-
-.edit-icon:hover {
-  color: #218838; /* Darker green on hover */
-}
-
-.delete-icon {
-  color: #dc3545; /* User-friendly red color */
-}
-
+.edit-icon:hover,
 .delete-icon:hover {
-  color: #c82333; /* Darker red on hover */
+  color: #555; 
 }
 
 /* Modal Styling */
@@ -296,34 +303,70 @@ input::placeholder {
   }
 }
 
-/* Add to your existing CSS */
 .product-box {
-  position: relative; /* Set position relative to position the checkbox */
+  position: relative; 
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
   background-color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex; /* Use flexbox for alignment */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: space-between; /* Space items evenly */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
 }
 
+/* Styles for the checkbox container */
 .checkbox-container {
-  position: absolute; /* Position the checkbox in the upper right */
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
 }
 
-.crossed-out {
-  text-decoration: line-through; /* Apply line-through effect when crossed out */
-  opacity: 0.5; /* Optional: make crossed-out items slightly transparent */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
 }
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #eee;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ddd;
+}
+
+.product-box.crossed-out h3,
+.product-box.crossed-out p {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.product-box.crossed-out {
+  opacity: 0.6;
+}
+
 
 /* Button Styles */
 .button {
-  background-color: #ff4242; /* Match header/footer color */
+  background-color: #ff4242; 
   color: white;
   border: none;
   border-radius: 5px;
@@ -334,24 +377,7 @@ input::placeholder {
 }
 
 .button:hover {
-  background-color: #e03e3e; /* Darker shade on hover */
-}
-
-/* Footer Styles */
-.footer {
-  padding: 10px;
-  text-align: center;
-  background-color: #ff4242; /* Match this color in the header */
-  color: white;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-
-.footer h2 {
-  margin: 0; /* Remove default margin */
-  font-size: 1.5rem; /* Adjust font size as needed */
-  color: white; /* Ensure the text color is white */
+  background-color: #e03e3e; 
 }
 
 /* Responsive Design */
@@ -382,17 +408,17 @@ input::placeholder {
   position: fixed;
   top: 20px;
   right: 20px;
-  background-color: #28a745; /* Green for success */
+  background-color: #28a745; 
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
   transition: opacity 0.5s;
-  z-index: 2000; /* Ensure it's on top of everything */
+  z-index: 2000; 
 }
 
 /* Error Notification */
 .notification-error {
-  background-color: #dc3545; /* Red for errors */
+  background-color: #dc3545; 
 }
 
 /* Hiding Notification */
