@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import Header from "./Header";
 import MainContent from "./MainContent";
-import Footer from "./Footer";
 import Greetings from "./Greetings";
 
 export default function App() {
@@ -22,7 +21,6 @@ export default function App() {
       <Header cartCount={cartCount} onSearch={handleSearch} />
       <Greetings user="Kent" />
       <MainContent onAddToCart={handleAddToCart} searchQuery={searchQuery} />
-      <Footer />
     </div>
   );
 }
